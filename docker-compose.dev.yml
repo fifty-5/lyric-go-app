@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  lyric-app-dev:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/home/app
+    depends_on:
+      - lyric-mysql
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 5
+        window: 120s
+    networks:
+      - go-network
+      
+  lyric-mysql:
+    image: mysql:8
+    restart: "no"
+    tty: true
+    ports:
+      - '3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lyrics
+    networks:
+      - go-network
+
+  lyric-pma:
+    restart: "no"
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '8001:80'
+    environment:
+      MYSQL_USERNAME: root
+      PMA_HOST: lyric-mysql
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - lyric-mysql
+    networks:
+      - go-network
+
+networks:
+  go-network:
+    driver: bridge
