@@ -5,7 +5,7 @@ Dependiendo el ambiente seleccionado, es necesario ejecutar el docker-compose pa
 
 ## ⚙️ Instalación
 
-### <mark>Development </mark>
+### <strong>Development </strong>
 
 Esta configuración de docker usa el módulo de ([air](https://github.com/cosmtrek/air)), el multistage del Dockerfile se centra en target dev:
 
@@ -31,7 +31,7 @@ docker compose up
 
 Esto expone el servidor http://localhost:3000.
 
-### <mark>Production</mark>
+### <strong>Production</strong>
 
 La configuración de producción utiliza una capa de buildeo de la aplicación para compilar un binario que sería copiado y expuesto a una imagen de linux alpine sencilla, esta imagen se conecta mediante política de networking puente en docker compose que será redireccionada por un server Nginx reverse proxy.
 
@@ -92,10 +92,10 @@ func LoadEnv() {
 
 El proyecto está construido con el módulo ([fiber](https://github.com/gofiber/fiber)) que se inspira en Express Js lo cual invitó a utilizar una estructura de carpetas similar a lo que utilizaremos en un proyecto de Backend productivo con Node JS. 
 
-* <mark>controllers</mark>: Este directorio contiene las funcionalidades de cada ruta o recurso expuesto en el servidor, infiere en tener una funcionalidad aislada para cada situación.
-* <mark>middlewares</mark>: Directorio donde se almacenan los prehandlers necesarios en la aplicación, como lo puede ser autenticación o autorización.
-* <mark>models</mark>: Expone los modelos utilizados por la lógica de programación y que se representan en base de datos.
-* <mark>utils</mark>: Su función es guardar lógica funcional reutilizable.
+* <strong>controllers</strong>: Este directorio contiene las funcionalidades de cada ruta o recurso expuesto en el servidor, infiere en tener una funcionalidad aislada para cada situación.
+* <strong>middlewares</strong>: Directorio donde se almacenan los prehandlers necesarios en la aplicación, como lo puede ser autenticación o autorización.
+* <strong>models</strong>: Expone los modelos utilizados por la lógica de programación y que se representan en base de datos.
+* <strong>utils</strong>: Su función es guardar lógica funcional reutilizable.
 
 Se utiliza un módulo de carga de archivos .env espeficimente el módulo [godotenv](https://github.com/joho/godotenv) donde en este momento se hardcodean claves de conexión a base de datos.
 
