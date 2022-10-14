@@ -26,7 +26,7 @@ Solo hay que ejecutar:
 
 
 ```bash
-docker compose up 
+docker compose -f docker-compose.dev.yml up
 ```
 
 Esto expone el servidor http://localhost:3000.
