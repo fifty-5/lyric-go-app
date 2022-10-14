@@ -11,12 +11,8 @@ services:
       - .:/home/app
     depends_on:
       - lyric-mysql
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 3s
-        max_attempts: 5
-        window: 120s
+    environment:
+      WAIT_HOSTS: lyric-mysql:3306
     networks:
       - go-network
       

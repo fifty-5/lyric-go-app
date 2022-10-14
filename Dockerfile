@@ -5,9 +5,13 @@ RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh 
 
 WORKDIR /home/app
 
+## Add the wait script to the image
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /home/wait
+RUN chmod +x /home/wait
+
 EXPOSE 3000
 
-CMD ["air"]
+CMD ["/bin/bash", "-c", "/home/wait && air"]
 
 # build for prod
 FROM golang:alpine3.16 AS build
