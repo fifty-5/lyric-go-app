@@ -3,6 +3,7 @@ package controllers
 import (
 	"github/chino/go-music-api/models"
 	"github/chino/go-music-api/utils"
+	"sort"
 	"sync"
 
 	"github.com/gofiber/fiber/v2"
@@ -99,6 +100,11 @@ func GetLyrics(c *fiber.Ctx) error {
 	response := insertAndGetLyrics(chApple, chChart)
 
 	wg.Wait()
+
+	// sort by name
+	sort.SliceStable(response, func(i, j int) bool {
+		return response[i].Name < response[j].Name
+	})
 
 	return c.Status(200).JSON(response)
 }
