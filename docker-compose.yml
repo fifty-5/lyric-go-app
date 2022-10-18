@@ -55,6 +55,17 @@ services:
     networks:
       - go-network
 
+  lyric-docs:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: docs
+    restart: "no"
+    ports:
+      - 8002:8002
+    networks:
+      - go-network
+
 networks:
   go-network:
     driver: bridge

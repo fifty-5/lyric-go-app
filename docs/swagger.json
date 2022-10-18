@@ -1,0 +1,105 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Documentación de API Lyrics V1",
+      "description": "Esto es una documentación de los endpoints utilizados en el ejercicio.",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://localhost:8000",
+        "description": "SwaggerHub API"
+      }
+    ],
+    "paths": {
+      "/signin": {
+        "post": {
+          "summary": "Registrarse en la API para obtener autorización",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "signin": {
+                    "summary": "Object para registrarse de ejemplo",
+                    "value": {
+                      "firstname": "Juanito",
+                      "lastname": "Escamilla",
+                      "email": "example@example.com",
+                      "password": 1234
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Registro realizado correctamente."
+            }
+          }
+        }
+      },
+      "/lyric": {
+        "get": {
+          "summary": "Obtener un listado de canciones",
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "description": "El nombre de la canción",
+              "required": false,
+              "style": "form",
+              "explode": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "artist",
+              "in": "query",
+              "description": "El artista",
+              "required": false,
+              "style": "form",
+              "explode": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "album",
+              "in": "query",
+              "description": "El album",
+              "required": false,
+              "style": "form",
+              "explode": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          },
+          "security": [
+            {
+              "basicAuth": []
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "schemas": {},
+      "securitySchemes": {
+        "basicAuth": {
+          "type": "http",
+          "scheme": "basic"
+        }
+      }
+    }
+  }

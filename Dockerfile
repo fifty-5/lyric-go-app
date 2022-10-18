@@ -35,3 +35,16 @@ COPY .env /home/.env
 EXPOSE 3000
 
 CMD ["/home/go.app"]
+
+## DOCS
+FROM node:16.16-alpine as docs
+
+# set working directory
+WORKDIR /app
+
+COPY ./docs ./
+
+RUN npx redoc-cli bundle -o index.html swagger.json
+
+# start app
+CMD ["node", "index.js"]

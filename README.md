@@ -109,6 +109,7 @@ El proyecto está construido con el módulo ([fiber](https://github.com/gofiber/
 * <strong>middlewares</strong>: Directorio donde se almacenan los prehandlers necesarios en la aplicación, como lo puede ser autenticación o autorización.
 * <strong>models</strong>: Expone los modelos utilizados por la lógica de programación y que se representan en base de datos.
 * <strong>utils</strong>: Su función es guardar lógica funcional reutilizable.
+* <strong>docs</strong>: Archivo de documentación de API basado en openAPI.
 
 Se utiliza un módulo de carga de archivos .env espeficimente el módulo [godotenv](https://github.com/joho/godotenv) donde en este momento se hardcodean claves de conexión a base de datos.
 
@@ -135,8 +136,14 @@ func LoadEnv() {
 En un ambiente productivo esto debería de modificarse para no tener elementos hardcodeados en el repositorio, sobre todo si se considera una clave de acceso importante.
 
 
-También expone la información de base de datos en un contenedor de [PMA](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) en el servidor http://localhost:8001
+## UI Database
 
+Se expone la información de base de datos en un contenedor de [PMA](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) en el servidor http://localhost:8001
+
+
+## API Docs
+
+Se expone una documentación de openAPI 3.0 en el servidor http://localhost:8002 (Producción).
 
 ## 🎯 Pruebas
 
