@@ -1,6 +1,9 @@
 package models
 
-import "math"
+import (
+	"encoding/xml"
+	"math"
+)
 
 type Params struct {
 	Name   string `query:"name"`
@@ -23,6 +26,21 @@ type LyricApple struct {
 type ResultApple struct {
 	ResultCount int
 	Results     []LyricApple
+}
+
+type ResultChartLyric struct {
+	XMLName xml.Name     `xml:"ArrayOfSearchLyricResult"`
+	Results []ChartLyric `xml:"SearchLyricResult"`
+}
+
+type ChartLyric struct {
+	TrackId   int    `xml:"TrackId"`
+	LyricId   int    `xml:"LyricId"`
+	SongUrl   string `xml:"SongUrl"`
+	Song      string `xml:"Song"`
+	SongRank  string `xml:"SongRank"`
+	Artist    string `xml:"Artist"`
+	ArtistUrl string `xml:"ArtistUrl"`
 }
 
 func (std *LyricApple) Map() {

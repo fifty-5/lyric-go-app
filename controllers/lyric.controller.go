@@ -16,9 +16,37 @@ func searchLyric(id int) models.Lyric {
 	return lyric
 }
 
-func insertAndGetLyrics(ch chan models.ResultApple) []models.LyricFormatted {
+func insertAndGetLyrics(ch chan models.ResultApple, ch2 chan models.ResultChartLyric) []models.LyricFormatted {
+	// contiene info de apple
 	std := <-ch
+	// contiene info de chartlyrics
+	std2 := <-ch2
 	data := []models.LyricFormatted{}
+
+	for i := 0; i < len(std2.Results); i++ {
+		input := std2.Results[i]
+
+		if input.TrackId == 0 {
+			continue
+		}
+
+		lyric := searchLyric(input.TrackId)
+
+		if lyric.ID == 0 {
+
+			lyric = models.Lyric{
+				ID:      input.TrackId,
+				Name:    input.Song,
+				Artist:  input.Artist,
+				Artwork: input.SongUrl,
+				Origin:  "chartlyrics",
+			}
+
+			utils.DB.Create(&lyric)
+		}
+
+		data = append(data, lyric.ToFormatted())
+	}
 
 	for i := 0; i < len(std.Results); i++ {
 		input := std.Results[i]
@@ -58,15 +86,17 @@ func GetLyrics(c *fiber.Ctx) error {
 	}
 
 	wg := &sync.WaitGroup{}
-	ch := make(chan models.ResultApple)
+	chApple := make(chan models.ResultApple)
+	chChart := make(chan models.ResultChartLyric)
 
-	wg.Add(1)
+	wg.Add(2)
 
 	client := utils.HttpClient()
 
-	go utils.SendRequest(client, *params, wg, ch)
+	go utils.SendRequestApple(client, *params, wg, chApple)
+	go utils.SendRequestChart(client, *params, wg, chChart)
 
-	response := insertAndGetLyrics(ch)
+	response := insertAndGetLyrics(chApple, chChart)
 
 	wg.Wait()
 
